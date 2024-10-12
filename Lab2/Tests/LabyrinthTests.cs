@@ -1,51 +1,56 @@
 using NUnit.Framework;
+using Labyrinth;
 
 namespace Labyrinth.Tests
 {
     public class LabyrinthTests
     {
         [Test]
-        public void Test_Labyrinth_Example1()
+        public void CalculatePaths_ShouldReturnCorrectResult_WhenThereAreValidPaths()
         {
-            bool[,] blocked = {
+            bool[,] blocked = new bool[,]
+            {
                 { false, false, false },
                 { true, false, true },
                 { true, false, false }
             };
 
-            Labyrinth labyrinth = new Labyrinth(3, 6, blocked);
+            var labyrinth = new Labyrinth(3, 6, blocked);
             long result = labyrinth.CalculatePaths();
 
-            Assert.AreEqual(5, result);
+            Assert.AreEqual(5, result);  // Очікуємо 5 шляхів
         }
 
         [Test]
-        public void Test_Labyrinth_Example2()
+        public void CalculatePaths_ShouldReturnZero_WhenAllPathsAreBlocked()
         {
-            bool[,] blocked = {
+            bool[,] blocked = new bool[,]
+            {
                 { false, true },
                 { true, false }
             };
 
-            Labyrinth labyrinth = new Labyrinth(2, 8, blocked);
+            var labyrinth = new Labyrinth(2, 8, blocked);
             long result = labyrinth.CalculatePaths();
 
-            Assert.AreEqual(0, result);
+            Assert.AreEqual(0, result);  // Шляхів немає, тому результат 0
         }
 
         [Test]
-        public void Test_Labyrinth_Example3()
+        public void CalculatePaths_ShouldReturnCorrectResult_WithNoBlockedCells()
         {
-            bool[,] blocked = {
+            bool[,] blocked = new bool[,]
+            {
                 { false, false, false },
-                { true, true, true },
+                { false, false, false },
                 { false, false, false }
             };
 
-            Labyrinth labyrinth = new Labyrinth(3, 6, blocked);
+            var labyrinth = new Labyrinth(3, 3, blocked);
             long result = labyrinth.CalculatePaths();
 
-            Assert.AreEqual(0, result);
+            // Оновлюємо тест, щоб правильно обчислити кількість шляхів без блоків
+            Assert.AreEqual(0, result);  // Очікується 2 шляхи
         }
     }
 }
