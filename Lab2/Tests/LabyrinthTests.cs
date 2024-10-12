@@ -1,28 +1,51 @@
-namespace Tests
+using NUnit.Framework;
+
+namespace Labyrinth.Tests
 {
-    [Parallelizable(ParallelScope.Self)]
-    [TestFixture]
-    public class Tests : PageTest
+    public class LabyrinthTests
     {
         [Test]
-        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingtoTheIntroPage()
+        public void Test_Labyrinth_Example1()
         {
-            await Page.GotoAsync("https://playwright.dev");
+            bool[,] blocked = {
+                { false, false, false },
+                { true, false, true },
+                { true, false, false }
+            };
 
-            // Expect a title "to contain" a substring.
-            await Expect(Page).ToHaveTitleAsync(new Regex("Playwright"));
+            Labyrinth labyrinth = new Labyrinth(3, 6, blocked);
+            long result = labyrinth.CalculatePaths();
 
-            // create a locator
-            var getStarted = Page.Locator("text=Get Started");
+            Assert.AreEqual(5, result);
+        }
 
-            // Expect an attribute "to be strictly equal" to the value.
-            await Expect(getStarted).ToHaveAttributeAsync("href", "/docs/intro");
+        [Test]
+        public void Test_Labyrinth_Example2()
+        {
+            bool[,] blocked = {
+                { false, true },
+                { true, false }
+            };
 
-            // Click the get started link.
-            await getStarted.ClickAsync();
+            Labyrinth labyrinth = new Labyrinth(2, 8, blocked);
+            long result = labyrinth.CalculatePaths();
 
-            // Expects the URL to contain intro.
-            await Expect(Page).ToHaveURLAsync(new Regex(".*intro"));
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void Test_Labyrinth_Example3()
+        {
+            bool[,] blocked = {
+                { false, false, false },
+                { true, true, true },
+                { false, false, false }
+            };
+
+            Labyrinth labyrinth = new Labyrinth(3, 6, blocked);
+            long result = labyrinth.CalculatePaths();
+
+            Assert.AreEqual(0, result);
         }
     }
 }

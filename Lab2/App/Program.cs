@@ -2,16 +2,57 @@
 
 namespace Labyrinth
 {
-    public class Program
+    internal static class Program
     {
-        public static void Main(string[] args)
+        private static void Main()
         {
-            var (N, K, blocked) = FileHandler.ReadInput("INPUT.TXT");
+            (int N, int K, bool[,] blocked) labyrinthData;
 
-            Labyrinth labyrinth = new Labyrinth(N, K, blocked);
-            long result = labyrinth.CalculatePaths();
+            try
+            {
+                // Зчитуємо вхідні дані з файлу INPUT.TXT
+                labyrinthData = FileHandler.ReadInput();
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine($"File not found: {e.FileName}");
+                Console.WriteLine($"Message: {e.Message}");
+                Console.WriteLine($"Stack Trace: {e.StackTrace}");
+                return;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error while reading input: {e.Message}");
+                return;
+            }
 
-            FileHandler.WriteOutput("OUTPUT.TXT", result);
+            long result;
+            try
+            {
+                // Створюємо екземпляр класу Labyrinth і обчислюємо кількість шляхів
+                var labyrinth = new Labyrinth(labyrinthData.N, labyrinthData.K, labyrinthData.blocked);
+                result = labyrinth.CalculatePaths();
+                Console.WriteLine($"Count of paths: {result}");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error during calculations: {e.Message}");
+                return;
+            }
+
+            try
+            {
+                // Записуємо результат у файл OUTPUT.TXT
+                FileHandler.WriteResult(result);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error while writing output: {e.Message}");
+                Console.WriteLine($"Stack Trace: {e.StackTrace}");
+            }
+
+            // Зупиняємо програму, чекаючи натискання клавіші Enter
+            Console.ReadLine();
         }
     }
 }
