@@ -8,7 +8,6 @@ namespace App
         // Метод для обчислення факторіалу
         public long Factorial(int n)
         {
-            // Проверка на отрицательные значения
             if (n < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(n), "Factorial is not defined for negative numbers.");

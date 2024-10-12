@@ -12,7 +12,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error reading word: {e.Message}");
+                Console.WriteLine(e.Message);
                 return;
             }
 
@@ -25,7 +25,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error calculating permutations: {e.Message}");
+                Console.WriteLine(e.Message);
                 return;
             }
 
@@ -35,8 +35,9 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error writing result: {e.Message}");
+                Console.WriteLine(e.Message);
             }
+            Console.ReadLine();
         }
     }
 }
