@@ -7,14 +7,14 @@ namespace App
 {
     public static class FileHandler
     {
-        private static readonly string BaseDirectory = AppContext.BaseDirectory;
 
-        private static readonly string InputFileName = Path.Combine(BaseDirectory, "INPUT.TXT");
-        private static readonly string OutputFileName = Path.Combine(BaseDirectory, "OUTPUT.TXT");
+        private static readonly string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+        private static readonly string InputFileName = Path.Combine(projectRoot, "INPUT.TXT");
+        private static readonly string OutputFileName = Path.Combine(projectRoot, "OUTPUT.TXT");
 
         public static string ReadWord()
         {
-            Console.WriteLine($"Current directory: {BaseDirectory}");
+            Console.WriteLine($"Current directory: {projectRoot}");
             Console.WriteLine($"Looking for input file at: {InputFileName}");
 
             if (!File.Exists(InputFileName))
