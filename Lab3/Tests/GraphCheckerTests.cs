@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.IO;
 
 namespace Lab3
 {
@@ -7,21 +8,37 @@ namespace Lab3
         [Test]
         public void TestGraphIsTree()
         {
-            // Створюємо тимчасовий файл для тестування
-            string inputFile = "TestInput.TXT";
-            File.WriteAllText(inputFile, "3\n0 1 0\n1 0 1\n0 1 0");
+            string inputFile = "TestInput1.TXT";
+            File.WriteAllText(inputFile, "3 010101010");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsTrue(graphChecker.IsTree());
         }
 
         [Test]
-        public void TestGraphIsNotTree()
+        public void TestGraphIsNotTree_CycleExists()
         {
-            // Створюємо тимчасовий файл для тестування
             string inputFile = "TestInput2.TXT";
-            File.WriteAllText(inputFile, "3\n0 1 1\n1 0 1\n1 1 0");
+            File.WriteAllText(inputFile, "3 011111110");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsFalse(graphChecker.IsTree());
+        }
+
+        [Test]
+        public void TestGraphIsNotTree_Disconnected()
+        {
+            string inputFile = "TestInput3.TXT";
+            File.WriteAllText(inputFile, "4 0100001000100000");
+            GraphChecker graphChecker = new GraphChecker(inputFile);
+            Assert.IsFalse(graphChecker.IsTree());
+        }
+
+        [Test]
+        public void TestGraphIsTree_LargerTree()
+        {
+            string inputFile = "TestInput4.TXT";
+            File.WriteAllText(inputFile, "4 0101001000000000"); 
+            GraphChecker graphChecker = new GraphChecker(inputFile);
+            Assert.IsTrue(graphChecker.IsTree());
         }
     }
 }
