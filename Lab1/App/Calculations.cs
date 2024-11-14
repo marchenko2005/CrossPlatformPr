@@ -5,7 +5,6 @@ namespace App
 {
     public class Calculations
     {
-        // Метод для обчислення факторіалу
         public long Factorial(int n)
         {
             if (n < 0)
@@ -21,16 +20,13 @@ namespace App
             return result;
         }
 
-        // Метод для обчислення кількості унікальних перестановок слова
         public long CalculatePermutations(string input)
         {
-            // Проверка на пустую строку
             if (string.IsNullOrWhiteSpace(input))
             {
                 throw new ArgumentException("Input string cannot be null or empty.", nameof(input));
             }
 
-            // Проверка на допустимые символы (только буквы)
             if (!input.All(char.IsLetter))
             {
                 throw new ArgumentException("Input string must contain only letters.", nameof(input));
