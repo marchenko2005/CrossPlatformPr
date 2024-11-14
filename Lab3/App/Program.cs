@@ -8,8 +8,7 @@ namespace Lab3
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-            string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
             string inputFilePath = Path.Combine(projectRoot, "INPUT.TXT");
             string outputFilePath = Path.Combine(projectRoot, "OUTPUT.TXT");
 

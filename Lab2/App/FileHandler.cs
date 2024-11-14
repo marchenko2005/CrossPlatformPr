@@ -8,7 +8,7 @@ namespace Labyrinth
 
     public static class FileHandler
     {
-        private static readonly string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
+        private static readonly string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
         private static readonly string InputFileName = Path.Combine(projectRoot, "INPUT.TXT");
         private static readonly string OutputFileName = Path.Combine(projectRoot, "OUTPUT.TXT");
 
