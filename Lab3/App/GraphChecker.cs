@@ -13,43 +13,34 @@ namespace Lab3
             ReadInput(inputFile);
         }
 
-        // Метод для зчитування матриці суміжності з файлу у форматі "3 010101010"
         private void ReadInput(string inputFile)
         {
-            Console.WriteLine("Читання вхідних даних...");
+            Console.WriteLine("Reading input data...");
 
-            var line = File.ReadAllText(inputFile).Trim();
-            var parts = line.Split(' ');
+            string[] lines = File.ReadAllLines(inputFile);
+            if (lines.Length == 0)
+                throw new FormatException("The input file is empty.");
 
-            // Перевірка коректності формату
-            if (parts.Length != 2)
-                throw new FormatException("Вхідний файл повинен містити два частини: кількість вершин і матрицю суміжності.");
+            if (!int.TryParse(lines[0].Trim(), out verticesCount))
+                throw new FormatException("The first line should be an integer representing the number of vertices.");
 
-            // Зчитуємо кількість вершин
-            if (!int.TryParse(parts[0], out verticesCount))
-                throw new FormatException("Перша частина повинна бути цілим числом, яке представляє кількість вершин.");
+            Console.WriteLine("Number of vertices: " + verticesCount);
 
-            Console.WriteLine("Кількість вершин: " + verticesCount);
-
-            // Створюємо матрицю суміжності
             adjacencyMatrix = new int[verticesCount, verticesCount];
 
-            // Зчитуємо рядок з 0 та 1 і заповнюємо матрицю
-            string matrixData = parts[1];
-            if (matrixData.Length != verticesCount * verticesCount)
-                throw new FormatException("Рядок матриці суміжності не відповідає очікуваній довжині.");
-
-            int index = 0;
             for (int i = 0; i < verticesCount; i++)
             {
+                string[] row = lines[i + 1].Trim().Split(' ');
+                if (row.Length != verticesCount)
+                    throw new FormatException("The adjacency matrix row length does not match the expected size.");
+
                 for (int j = 0; j < verticesCount; j++)
                 {
-                    adjacencyMatrix[i, j] = matrixData[index] - '0'; // Перетворення символу на число
-                    index++;
+                    adjacencyMatrix[i, j] = int.Parse(row[j]);
                 }
             }
 
-            Console.WriteLine("Матриця суміжності:");
+            Console.WriteLine("Adjacency matrix:");
             for (int i = 0; i < verticesCount; i++)
             {
                 for (int j = 0; j < verticesCount; j++)
@@ -60,37 +51,46 @@ namespace Lab3
             }
         }
 
-        // Метод для перевірки, чи граф є деревом
         public bool IsTree()
         {
             bool[] visited = new bool[verticesCount];
+            int edgeCount = 0;
 
-            Console.WriteLine("Перевірка на цикли...");
+            Console.WriteLine("Checking for cycles...");
 
-            // Перевірка на цикли
             if (HasCycle(-1, 0, visited))
             {
-                Console.WriteLine("Виявлено цикл у графі.");
+                Console.WriteLine("Cycle detected in the graph.");
                 return false;
             }
 
-            Console.WriteLine("Перевірка на зв'язність...");
+            Console.WriteLine("Checking for connectivity...");
 
-            // Перевірка на зв'язність
+            int visitedCount = 0;
+            foreach (bool v in visited)
+            {
+                if (v) visitedCount++;
+            }
+
+            Console.WriteLine("Number of visited vertices: " + visitedCount);
+
             for (int i = 0; i < verticesCount; i++)
             {
-                if (!visited[i])
+                for (int j = i + 1; j < verticesCount; j++)
                 {
-                    Console.WriteLine("Граф не є зв'язним.");
-                    return false;
+                    if (adjacencyMatrix[i, j] == 1)
+                    {
+                        edgeCount++;
+                    }
                 }
             }
 
-            Console.WriteLine("Граф є зв'язним і не містить циклів.");
-            return true;
+            Console.WriteLine("Edge count: " + edgeCount);
+            Console.WriteLine("Expected edges for a tree: " + (verticesCount - 1));
+
+            return visitedCount == verticesCount && edgeCount == verticesCount - 1;
         }
 
-        // Перевірка на наявність циклів за допомогою DFS
         private bool HasCycle(int parent, int vertex, bool[] visited)
         {
             visited[vertex] = true;
