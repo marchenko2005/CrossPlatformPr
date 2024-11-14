@@ -5,11 +5,22 @@ namespace Lab3
 {
     public class GraphCheckerTests
     {
+        private readonly string testDirectory = Path.Combine(Directory.GetParent(TestContext.CurrentContext.TestDirectory).Parent.Parent.Parent.FullName, "App");
+
+        [SetUp]
+        public void Setup()
+        {
+            if (!Directory.Exists(testDirectory))
+            {
+                Directory.CreateDirectory(testDirectory);
+            }
+        }
+
         [Test]
         public void TestGraphIsTree()
         {
-            string inputFile = "TestInput1.TXT";
-            File.WriteAllText(inputFile, "3 010101010");
+            string inputFile = Path.Combine(testDirectory, "TestInput1.TXT");
+            File.WriteAllText(inputFile, "3\n0 1 0\n1 0 1\n0 1 0");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsTrue(graphChecker.IsTree());
         }
@@ -17,8 +28,8 @@ namespace Lab3
         [Test]
         public void TestGraphIsNotTree_CycleExists()
         {
-            string inputFile = "TestInput2.TXT";
-            File.WriteAllText(inputFile, "3 011111110");
+            string inputFile = Path.Combine(testDirectory, "TestInput2.TXT");
+            File.WriteAllText(inputFile, "3\n0 1 1\n1 0 1\n1 1 0");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsFalse(graphChecker.IsTree());
         }
@@ -26,8 +37,8 @@ namespace Lab3
         [Test]
         public void TestGraphIsNotTree_Disconnected()
         {
-            string inputFile = "TestInput3.TXT";
-            File.WriteAllText(inputFile, "4 0100001000100000");
+            string inputFile = Path.Combine(testDirectory, "TestInput3.TXT");
+            File.WriteAllText(inputFile, "4\n0 1 0 0\n1 0 0 1\n0 0 0 0\n0 1 0 0");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsFalse(graphChecker.IsTree());
         }
@@ -35,8 +46,8 @@ namespace Lab3
         [Test]
         public void TestGraphIsTree_LargerTree()
         {
-            string inputFile = "TestInput4.TXT";
-            File.WriteAllText(inputFile, "4 0101001000000000"); 
+            string inputFile = Path.Combine(testDirectory, "TestInput4.TXT");
+            File.WriteAllText(inputFile, "4\n0 1 1 0\n1 0 0 1\n1 0 0 0\n0 1 0 0");
             GraphChecker graphChecker = new GraphChecker(inputFile);
             Assert.IsTrue(graphChecker.IsTree());
         }

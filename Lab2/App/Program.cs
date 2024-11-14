@@ -10,7 +10,6 @@ namespace Labyrinth
 
             try
             {
-                // Зчитуємо вхідні дані з файлу INPUT.TXT
                 labyrinthData = FileHandler.ReadInput();
             }
             catch (FileNotFoundException e)
