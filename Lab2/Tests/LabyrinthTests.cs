@@ -18,7 +18,7 @@ namespace Labyrinth.Tests
             var labyrinth = new Labyrinth(3, 6, blocked);
             long result = labyrinth.CalculatePaths();
 
-            Assert.AreEqual(5, result);  // Очікуємо 5 шляхів
+            Assert.AreEqual(5, result);  // ГЋГ·ВіГЄГіВєГ¬Г® 5 ГёГ«ГїГµВіГў
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace Labyrinth.Tests
             var labyrinth = new Labyrinth(2, 8, blocked);
             long result = labyrinth.CalculatePaths();
 
-            Assert.AreEqual(0, result);  // Шляхів немає, тому результат 0
+            Assert.AreEqual(0, result);  // ГГ«ГїГµВіГў Г­ГҐГ¬Г Вє, ГІГ®Г¬Гі Г°ГҐГ§ГіГ«ГјГІГ ГІ 0
         }
 
         [Test]
@@ -48,9 +48,7 @@ namespace Labyrinth.Tests
 
             var labyrinth = new Labyrinth(3, 3, blocked);
             long result = labyrinth.CalculatePaths();
-
-            // Оновлюємо тест, щоб правильно обчислити кількість шляхів без блоків
-            Assert.AreEqual(0, result);  // Очікується 2 шляхи
+            Assert.AreEqual(0, result);  
         }
     }
 }
