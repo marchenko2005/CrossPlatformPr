@@ -33,11 +33,8 @@ namespace Labyrinth.Tests
             var labyrinth = new Labyrinth(2, 8, blocked);
             long result = labyrinth.CalculatePaths();
 
-<<<<<<< HEAD
             Assert.AreEqual(0, result);  
-=======
             Assert.AreEqual(0, result); 
->>>>>>> 60651afbe3dba2726873ef956afb812649fe7fe8
         }
 
         [Test]
@@ -52,10 +49,6 @@ namespace Labyrinth.Tests
 
             var labyrinth = new Labyrinth(3, 3, blocked);
             long result = labyrinth.CalculatePaths();
-<<<<<<< HEAD
-
-=======
->>>>>>> 60651afbe3dba2726873ef956afb812649fe7fe8
             Assert.AreEqual(0, result);  
         }
     }

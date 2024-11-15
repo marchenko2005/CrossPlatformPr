@@ -32,7 +32,6 @@ namespace Labyrinth
                 throw new InvalidOperationException("Input file is empty.");
             }
 
-            // Перевіряємо, що перший рядок містить два числа
             string[] parameters = lines[0].Split();
             if (parameters.Length != 2)
             {
@@ -42,7 +41,6 @@ namespace Labyrinth
             int N = int.Parse(parameters[0]);
             int K = int.Parse(parameters[1]);
 
-            // Читання карти лабіринту
             bool[,] blocked = new bool[N, N];
             for (int i = 1; i <= N; i++)
             {

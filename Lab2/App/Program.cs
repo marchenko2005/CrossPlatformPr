@@ -28,7 +28,6 @@ namespace Labyrinth
             long result;
             try
             {
-                // Створюємо екземпляр класу Labyrinth і обчислюємо кількість шляхів
                 var labyrinth = new Labyrinth(labyrinthData.N, labyrinthData.K, labyrinthData.blocked);
                 result = labyrinth.CalculatePaths();
                 Console.WriteLine($"Count of paths: {result}");
@@ -41,7 +40,6 @@ namespace Labyrinth
 
             try
             {
-                // Записуємо результат у файл OUTPUT.TXT
                 FileHandler.WriteResult(result);
             }
             catch (Exception e)
@@ -50,7 +48,6 @@ namespace Labyrinth
                 Console.WriteLine($"Stack Trace: {e.StackTrace}");
             }
 
-            // Зупиняємо програму, чекаючи натискання клавіші Enter
             Console.ReadLine();
         }
     }
