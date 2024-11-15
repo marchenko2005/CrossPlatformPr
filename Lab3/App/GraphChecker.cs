@@ -146,26 +146,5 @@ namespace Lab3
             return count;
         }
 
-        // Перевірка кількості ребер
-        private bool HasCorrectEdgeCount()
-        {
-            Console.WriteLine("Перевірка кількості ребер...");
-            int edgeCount = 0;
-
-            for (int i = 0; i < verticesCount; i++)
-            {
-                for (int j = i + 1; j < verticesCount; j++)
-                {
-                    if (adjacencyMatrix[i, j] == 1)
-                    {
-                        edgeCount++;
-                    }
-                }
-            }
-
-            Console.WriteLine("Кількість ребер: " + edgeCount);
-            Console.WriteLine("Очікувана кількість ребер для дерева: " + (verticesCount - 1));
-            return edgeCount == verticesCount - 1;
-        }
     }
 }
