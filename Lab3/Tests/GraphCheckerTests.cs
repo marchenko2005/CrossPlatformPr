@@ -10,34 +10,34 @@ namespace Lab3.Tests
         [Test]
         public void TestGraphIsTree()
         {
-            // Симулюємо вхідні дані
+            // РЎРёРјСѓР»СЋС”РјРѕ РІС…С–РґРЅС– РґР°РЅС–
             string input = "3\n0 1 0\n1 0 1\n0 1 0";
             string tempFile = CreateTempFile(input);
 
             GraphChecker graphChecker = new GraphChecker(tempFile);
-            Assert.IsTrue(graphChecker.IsTree(), "Граф є деревом, але метод повернув false.");
+            Assert.IsTrue(graphChecker.IsTree(), "Р“СЂР°С„ С” РґРµСЂРµРІРѕРј, Р°Р»Рµ РјРµС‚РѕРґ РїРѕРІРµСЂРЅСѓРІ false.");
         }
 
         [Test]
         public void TestGraphIsNotTree_CycleExists()
         {
-            // Граф із циклом
+            // Р“СЂР°С„ С–Р· С†РёРєР»РѕРј
             string input = "3\n0 1 1\n1 0 1\n1 1 0";
             string tempFile = CreateTempFile(input);
 
             GraphChecker graphChecker = new GraphChecker(tempFile);
-            Assert.IsFalse(graphChecker.IsTree(), "Граф містить цикл, але метод повернув true.");
+            Assert.IsFalse(graphChecker.IsTree(), "Р“СЂР°С„ РјС–СЃС‚РёС‚СЊ С†РёРєР», Р°Р»Рµ РјРµС‚РѕРґ РїРѕРІРµСЂРЅСѓРІ true.");
         }
 
         [Test]
         public void TestGraphIsNotTree_Disconnected()
         {
-            // Роз'єднаний граф
+            // Р РѕР·'С”РґРЅР°РЅРёР№ РіСЂР°С„
             string input = "4\n0 1 0 0\n1 0 0 1\n0 0 0 0\n0 1 0 0";
             string tempFile = CreateTempFile(input);
 
             GraphChecker graphChecker = new GraphChecker(tempFile);
-            Assert.IsFalse(graphChecker.IsTree(), "Граф не є зв'язним, але метод повернув true.");
+            Assert.IsFalse(graphChecker.IsTree(), "Р“СЂР°С„ РЅРµ С” Р·РІ'СЏР·РЅРёРј, Р°Р»Рµ РјРµС‚РѕРґ РїРѕРІРµСЂРЅСѓРІ true.");
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace Lab3.Tests
             string input = "";
             string tempFile = CreateTempFile(input);
 
-            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "Файл порожній.");
+            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "Р¤Р°Р№Р» РїРѕСЂРѕР¶РЅС–Р№.");
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Lab3.Tests
             string input = "3\n0 1\n1 0 1\n0 1 0";
             string tempFile = CreateTempFile(input);
 
-            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "Матриця суміжності має некоректний розмір.");
+            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "РњР°С‚СЂРёС†СЏ СЃСѓРјС–Р¶РЅРѕСЃС‚С– РјР°С” РЅРµРєРѕСЂРµРєС‚РЅРёР№ СЂРѕР·РјС–СЂ.");
         }
 
         [Test]
@@ -64,32 +64,32 @@ namespace Lab3.Tests
             string input = "3\n0 1 A\n1 0 1\n0 1 0";
             string tempFile = CreateTempFile(input);
 
-            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "Матриця містить некоректні символи.");
+            Assert.Throws<FormatException>(() => new GraphChecker(tempFile), "РњР°С‚СЂРёС†СЏ РјС–СЃС‚РёС‚СЊ РЅРµРєРѕСЂРµРєС‚РЅС– СЃРёРјРІРѕР»Рё.");
         }
 
         [Test]
         public void TestGraphIsTree_LargerTree()
         {
-            // Велике дерево
+            // Р’РµР»РёРєРµ РґРµСЂРµРІРѕ
             string input = "4\n0 1 1 0\n1 0 0 1\n1 0 0 0\n0 1 0 0";
             string tempFile = CreateTempFile(input);
 
             GraphChecker graphChecker = new GraphChecker(tempFile);
-            Assert.IsTrue(graphChecker.IsTree(), "Граф є деревом, але метод повернув false.");
+            Assert.IsTrue(graphChecker.IsTree(), "Р“СЂР°С„ С” РґРµСЂРµРІРѕРј, Р°Р»Рµ РјРµС‚РѕРґ РїРѕРІРµСЂРЅСѓРІ false.");
         }
 
         [Test]
         public void TestGraphHasCycleAndConnected()
         {
-            // Граф зв'язний, але містить цикл
+            // Р“СЂР°С„ Р·РІ'СЏР·РЅРёР№, Р°Р»Рµ РјС–СЃС‚РёС‚СЊ С†РёРєР»
             string input = "4\n0 1 1 0\n1 0 1 1\n1 1 0 1\n0 1 1 0";
             string tempFile = CreateTempFile(input);
 
             GraphChecker graphChecker = new GraphChecker(tempFile);
-            Assert.IsFalse(graphChecker.IsTree(), "Граф містить цикл, але метод повернув true.");
+            Assert.IsFalse(graphChecker.IsTree(), "Р“СЂР°С„ РјС–СЃС‚РёС‚СЊ С†РёРєР», Р°Р»Рµ РјРµС‚РѕРґ РїРѕРІРµСЂРЅСѓРІ true.");
         }
 
-        // Метод для створення тимчасового файлу з вхідними даними
+        // РњРµС‚РѕРґ РґР»СЏ СЃС‚РІРѕСЂРµРЅРЅСЏ С‚РёРјС‡Р°СЃРѕРІРѕРіРѕ С„Р°Р№Р»Сѓ Р· РІС…С–РґРЅРёРјРё РґР°РЅРёРјРё
         private string CreateTempFile(string input)
         {
             string tempFile = Path.GetTempFileName();
