@@ -1,8 +1,7 @@
-﻿using System;
-
-namespace Lab2
+﻿namespace Lab2
 {
     public static class LabyrinthProcessor
+
     {
         public static int ProcessLabyrinth(string input)
         {
