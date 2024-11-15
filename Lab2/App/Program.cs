@@ -1,53 +1,62 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
-namespace Labyrinth
+namespace Lab2
 {
-    internal static class Program
+    public class Program
     {
-        private static void Main()
+        static void Main(string[] args)
         {
-            (int N, int K, bool[,] blocked) labyrinthData;
+            Console.OutputEncoding = Encoding.UTF8;
 
-            try
+            // Шляхи до вхідного та вихідного файлів
+            string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
+            string inputFilePath = Path.Combine(projectRoot, "INPUT.TXT");
+            string outputFilePath = Path.Combine(projectRoot, "OUTPUT.TXT");
+
+            if (!File.Exists(inputFilePath))
             {
-                labyrinthData = FileHandler.ReadInput();
-            }
-            catch (FileNotFoundException e)
-            {
-                Console.WriteLine($"File not found: {e.FileName}");
-                Console.WriteLine($"Message: {e.Message}");
-                Console.WriteLine($"Stack Trace: {e.StackTrace}");
-                return;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error while reading input: {e.Message}");
+                Console.WriteLine("Вхідний файл не знайдено.");
                 return;
             }
 
-            long result;
-            try
-            {
-                var labyrinth = new Labyrinth(labyrinthData.N, labyrinthData.K, labyrinthData.blocked);
-                result = labyrinth.CalculatePaths();
-                Console.WriteLine($"Count of paths: {result}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error during calculations: {e.Message}");
-                return;
-            }
+            string labyrinthData = File.ReadAllText(inputFilePath);
 
             try
             {
-                FileHandler.WriteResult(result);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error while writing output: {e.Message}");
-                Console.WriteLine($"Stack Trace: {e.StackTrace}");
-            }
+                // Перевірка, чи вхідні дані не порожні
+                LabyrinthProcessor.ValidateInputNotEmpty(labyrinthData);
 
+                // Розбір та перевірка вхідних даних
+                var (gridSize, steps, grid) = LabyrinthProcessor.ParseInput(labyrinthData);
+
+                // Перевірка розміру лабіринту
+                LabyrinthProcessor.ValidateGridSize(gridSize);
+
+                // Перевірка кількості кроків
+                LabyrinthProcessor.ValidateStepCount(steps);
+
+                // Перевірка коректності лабіринту
+                LabyrinthProcessor.ValidateGrid(grid, gridSize);
+
+                // Обчислення кількості шляхів
+                int result = LabyrinthProcessor.CalculatePaths(gridSize, steps, grid);
+
+                // Запис результату у вихідний файл
+                File.WriteAllText(outputFilePath, result.ToString());
+                Console.WriteLine("Лабіринт оброблено успішно.");
+                Console.WriteLine($"Результат записано у файл: {outputFilePath}");
+                Console.WriteLine($"Кількість унікальних шляхів: {result}");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Помилка вхідних даних: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Невідома помилка: {ex.Message}");
+            }
             Console.ReadLine();
         }
     }
