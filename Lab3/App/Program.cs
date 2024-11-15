@@ -8,6 +8,7 @@ namespace Lab3
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+
             string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName;
             string inputFilePath = Path.Combine(projectRoot, "INPUT.TXT");
             string outputFilePath = Path.Combine(projectRoot, "OUTPUT.TXT");
@@ -17,18 +18,18 @@ namespace Lab3
                 GraphChecker graphChecker = new GraphChecker(inputFilePath);
                 string result = graphChecker.IsTree() ? "YES" : "NO";
 
-                Console.WriteLine("Final result: " + result);
+                Console.WriteLine("Результат перевірки: " + result);
                 File.WriteAllText(outputFilePath, result);
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("Error: File not found at path " + inputFilePath);
+                Console.WriteLine("Помилка: файл не знайдено за шляхом " + inputFilePath);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.WriteLine("Сталася помилка: " + ex.Message);
             }
-            Console.ReadLine();
+            Console.ReadLine(); 
         }
     }
 }
