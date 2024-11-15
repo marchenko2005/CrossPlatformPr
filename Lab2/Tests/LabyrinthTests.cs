@@ -12,7 +12,7 @@ namespace Tests
         {
             string input = "";
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ValidateInputNotEmpty(input));
-            Assert.AreEqual("Вхідний файл порожній або містить лише пробіли.", ex.Message);
+            Assert.AreEqual("Р’С…С–РґРЅРёР№ С„Р°Р№Р» РїРѕСЂРѕР¶РЅС–Р№ Р°Р±Рѕ РјС–СЃС‚РёС‚СЊ Р»РёС€Рµ РїСЂРѕР±С–Р»Рё.", ex.Message);
         }
 
         [Test]
@@ -20,7 +20,7 @@ namespace Tests
         {
             string input = "    ";
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ValidateInputNotEmpty(input));
-            Assert.AreEqual("Вхідний файл порожній або містить лише пробіли.", ex.Message);
+            Assert.AreEqual("Р’С…С–РґРЅРёР№ С„Р°Р№Р» РїРѕСЂРѕР¶РЅС–Р№ Р°Р±Рѕ РјС–СЃС‚РёС‚СЊ Р»РёС€Рµ РїСЂРѕР±С–Р»Рё.", ex.Message);
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace Tests
         {
             int gridSize = 0;
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ValidateGridSize(gridSize));
-            Assert.AreEqual("Розмір лабіринту повинен бути додатнім.", ex.Message);
+            Assert.AreEqual("Р РѕР·РјС–СЂ Р»Р°Р±С–СЂРёРЅС‚Сѓ РїРѕРІРёРЅРµРЅ Р±СѓС‚Рё РґРѕРґР°С‚РЅС–Рј.", ex.Message);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Tests
         {
             int steps = -1;
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ValidateStepCount(steps));
-            Assert.AreEqual("Кількість кроків не може бути негативною.", ex.Message);
+            Assert.AreEqual("РљС–Р»СЊРєС–СЃС‚СЊ РєСЂРѕРєС–РІ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РЅРµРіР°С‚РёРІРЅРѕСЋ.", ex.Message);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Tests
                 { '0', '0', '0' }
             };
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ValidateGrid(grid, 3));
-            Assert.AreEqual("Неправильний формат вхідних даних: символ у рядку 1, колонка 3 повинен бути '0' або '1'.", ex.Message);
+            Assert.AreEqual("РќРµРїСЂР°РІРёР»СЊРЅРёР№ С„РѕСЂРјР°С‚ РІС…С–РґРЅРёС… РґР°РЅРёС…: СЃРёРјРІРѕР» Сѓ СЂСЏРґРєСѓ 1, РєРѕР»РѕРЅРєР° 3 РїРѕРІРёРЅРµРЅ Р±СѓС‚Рё '0' Р°Р±Рѕ '1'.", ex.Message);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Tests
         {
             string input = "3 a\n000\n010\n000";
             var ex = Assert.Throws<ArgumentException>(() => LabyrinthProcessor.ParseInput(input));
-            Assert.AreEqual("Неправильний формат вхідних даних: розмір лабіринту та кількість кроків повинні бути цілими числами.", ex.Message);
+            Assert.AreEqual("РќРµРїСЂР°РІРёР»СЊРЅРёР№ С„РѕСЂРјР°С‚ РІС…С–РґРЅРёС… РґР°РЅРёС…: СЂРѕР·РјС–СЂ Р»Р°Р±С–СЂРёРЅС‚Сѓ С‚Р° РєС–Р»СЊРєС–СЃС‚СЊ РєСЂРѕРєС–РІ РїРѕРІРёРЅРЅС– Р±СѓС‚Рё С†С–Р»РёРјРё С‡РёСЃР»Р°РјРё.", ex.Message);
         }
 
         [Test]
