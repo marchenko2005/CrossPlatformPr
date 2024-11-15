@@ -1,48 +1,88 @@
 using NUnit.Framework;
-using App;
 using System;
+using System.Collections.Generic;
+using Lab1;
 
-namespace Tests
+namespace Lab1.Tests
 {
     [TestFixture]
-    public class CalculationsTests
+    public class AnagramHelperTests
     {
-        private Calculations _calculations;
-
-        [SetUp]
-        public void Setup()
+        [Test]
+        public void CalculateCharacterCounts_WithValidInput_ReturnsCorrectCharacterCounts()
         {
-            _calculations = new Calculations();
+            string inputWord = "hello";
+            var expectedCounts = new Dictionary<char, int>
+            {
+                {'h', 1},
+                {'e', 1},
+                {'l', 2},
+                {'o', 1}
+            };
+
+            var result = AnagramHelper.CalculateCharacterCounts(inputWord);
+
+            Assert.AreEqual(expectedCounts, result);
         }
 
         [Test]
-        public void TestFactorial_CorrectInput()
+        public void CalculateCharacterCounts_WithEmptyString_ThrowsArgumentException()
         {
-            Assert.AreEqual(120, _calculations.Factorial(5));
-            Assert.AreEqual(1, _calculations.Factorial(0));
-            Assert.AreEqual(1, _calculations.Factorial(1));
+            string inputWord = "";
+
+            var ex = Assert.Throws<ArgumentException>(() => AnagramHelper.CalculateCharacterCounts(inputWord));
+            Assert.That(ex.Message, Is.EqualTo("¬х≥дне слово не може бути порожн≥м або null."));
         }
 
         [Test]
-        public void TestCalculatePermutations_CorrectInput()
+        public void CalculateFactorial_WithValidInput_ReturnsCorrectFactorial()
         {
-            Assert.AreEqual(12, _calculations.CalculatePermutations("solo"));
-            Assert.AreEqual(180, _calculations.CalculatePermutations("letter"));
-            Assert.AreEqual(1, _calculations.CalculatePermutations("aaa"));
+            int number = 5;
+            long expectedFactorial = 120;
+
+            var result = AnagramHelper.CalculateFactorial(number);
+
+            Assert.AreEqual(expectedFactorial, result);
         }
 
         [Test]
-        public void TestCalculatePermutations_EmptyString()
+        public void CalculateFactorial_WithNegativeNumber_ThrowsArgumentException()
         {
-            var ex = Assert.Throws<ArgumentException>(() => _calculations.CalculatePermutations(""));
-            Assert.AreEqual("Input string cannot be null or empty. (Parameter 'input')", ex.Message);
+            int number = -1;
+
+            var ex = Assert.Throws<ArgumentException>(() => AnagramHelper.CalculateFactorial(number));
+            Assert.That(ex.Message, Is.EqualTo("„исло не може бути негативним."));
         }
 
         [Test]
-        public void TestCalculatePermutations_InvalidCharacters()
+        public void CalculateUniquePermutations_WithUniqueCharacters_ReturnsCorrectPermutations()
         {
-            var ex = Assert.Throws<ArgumentException>(() => _calculations.CalculatePermutations("abc123"));
-            Assert.AreEqual("Input string must contain only letters. (Parameter 'input')", ex.Message);
+            string inputWord = "abcd";
+            long expectedPermutations = 24;
+
+            var result = AnagramHelper.CalculateUniquePermutations(inputWord);
+
+            Assert.AreEqual(expectedPermutations, result);
+        }
+
+        [Test]
+        public void CalculateUniquePermutations_WithDuplicateCharacters_ReturnsCorrectPermutations()
+        {
+            string inputWord = "aabb";
+            long expectedPermutations = 6;
+
+            var result = AnagramHelper.CalculateUniquePermutations(inputWord);
+
+            Assert.AreEqual(expectedPermutations, result);
+        }
+
+        [Test]
+        public void CalculateUniquePermutations_WithEmptyString_ThrowsArgumentException()
+        {
+            string inputWord = "";
+
+            var ex = Assert.Throws<ArgumentException>(() => AnagramHelper.CalculateUniquePermutations(inputWord));
+            Assert.That(ex.Message, Is.EqualTo("¬х≥дне слово не може бути порожн≥м або null."));
         }
     }
 }

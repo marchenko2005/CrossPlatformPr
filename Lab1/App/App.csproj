@@ -6,10 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="bin\Debug\net8.0\INPUT.txt" />
-    <None Include="bin\Debug\net8.0\OUTPUT.txt" />
-  </ItemGroup>
-
 </Project>
