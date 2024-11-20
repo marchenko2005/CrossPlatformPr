@@ -1,79 +1,104 @@
 ﻿using System;
-using System.IO;
 using System.Text;
-using Lab1;
-using Lab2;
-using Lab3;
+using System.CommandLine;
+using System.CommandLine.Invocation;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace MMarchenkoLib
 {
-    public class LabExecutor
+    class Program
     {
-        // Метод для виконання конкретної лабораторної роботи
-        public void ExecuteLab(string lab, string inputPath, string outputPath)
+        static async Task Main(string[] args)
         {
-            switch (lab.ToLower())
+            Console.OutputEncoding = Encoding.UTF8;
+
+            // Головна команда
+            var rootCommand = new RootCommand("Lab Console Application");
+
+            // Команда "version"
+            var versionCommand = new Command("version", "Вивести інформацію про версію програми");
+            versionCommand.SetHandler(() =>
             {
-                case "lab1":
-                    RunLab1(inputPath, outputPath);
-                    break;
-                case "lab2":
-                    RunLab2(inputPath, outputPath);
-                    break;
-                case "lab3":
-                    RunLab3(inputPath, outputPath);
-                    break;
-                default:
-                    throw new ArgumentException($"Невідома лабораторна робота: {lab}");
-            }
-        }
+                Console.WriteLine("Автор: MMarchenko");
+                Console.WriteLine("Версія: 1.0.0");
+            });
 
-        // Реалізація Lab1
-        private void RunLab1(string inputPath, string outputPath)
-        {
-            if (!File.Exists(inputPath))
-                throw new FileNotFoundException($"Вхідний файл не знайдено: {inputPath}");
+            // Команда "run"
+            var labOption = new Option<string>("--lab", "Номер лабораторної роботи (lab1, lab2, lab3)") { IsRequired = true };
+            var inputOption = new Option<string>("--input", "Шлях до вхідного файлу") { IsRequired = true };
+            var outputOption = new Option<string>("--output", "Шлях до вихідного файлу") { IsRequired = true };
 
-            string inputWord = File.ReadAllText(inputPath)?.Trim() ?? string.Empty;
+            var runCommand = new Command("run", "Запустити лабораторну роботу")
+            {
+                labOption,
+                inputOption,
+                outputOption
+            };
 
-            long uniquePermutations = AnagramHelper.CalculateUniquePermutations(inputWord);
+            runCommand.SetHandler((string lab, string input, string output) =>
+            {
+                if (string.IsNullOrWhiteSpace(lab))
+                {
+                    Console.WriteLine("Необхідно вказати номер лабораторної роботи (lab1, lab2, lab3).");
+                    return;
+                }
 
-            File.WriteAllText(outputPath, uniquePermutations.ToString());
-            Console.WriteLine($"Lab1 завершено. Кількість унікальних перестановок: {uniquePermutations}");
-        }
+                try
+                {
+                    switch (lab.ToLower())
+                    {
+                        case "lab1":
+                            Lab1.Process(input, output);
+                            break;
 
-        // Реалізація Lab2
-        private void RunLab2(string inputPath, string outputPath)
-        {
-            if (!File.Exists(inputPath))
-                throw new FileNotFoundException($"Вхідний файл не знайдено: {inputPath}");
+                        case "lab2":
+                            Lab2.Process(input, output);
+                            break;
 
-            string labyrinthData = File.ReadAllText(inputPath);
+                        case "lab3":
+                            Lab3.Process(input, output);
+                            break;
 
-            LabyrinthProcessor.ValidateInputNotEmpty(labyrinthData);
+                        default:
+                            Console.WriteLine($"Лабораторна робота \"{lab}\" не знайдена.");
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Сталася помилка під час виконання: {ex.Message}");
+                }
+            }, labOption, inputOption, outputOption);
 
-            var (gridSize, steps, grid) = LabyrinthProcessor.ParseInput(labyrinthData);
-            LabyrinthProcessor.ValidateGridSize(gridSize);
-            LabyrinthProcessor.ValidateStepCount(steps);
-            LabyrinthProcessor.ValidateGrid(grid, gridSize);
+            // Команда "set-path"
+            var pathOption = new Option<string>("--path", "Шлях до папки") { IsRequired = true };
 
-            int result = LabyrinthProcessor.CalculatePaths(gridSize, steps, grid);
+            var setPathCommand = new Command("set-path", "Встановити шлях до директорії з файлами")
+            {
+                pathOption
+            };
 
-            File.WriteAllText(outputPath, result.ToString());
-            Console.WriteLine($"Lab2 завершено. Кількість унікальних шляхів: {result}");
-        }
+            setPathCommand.SetHandler((string path) =>
+            {
+                if (!string.IsNullOrEmpty(path))
+                {
+                    Environment.SetEnvironmentVariable("LAB_PATH", path);
+                    Console.WriteLine($"Шлях встановлено: {path}");
+                }
+                else
+                {
+                    Console.WriteLine("Необхідно вказати коректний шлях.");
+                }
+            }, pathOption);
 
-        // Реалізація Lab3
-        private void RunLab3(string inputPath, string outputPath)
-        {
-            if (!File.Exists(inputPath))
-                throw new FileNotFoundException($"Вхідний файл не знайдено: {inputPath}");
+            // Додавання команд до головної команди
+            rootCommand.AddCommand(versionCommand);
+            rootCommand.AddCommand(runCommand);
+            rootCommand.AddCommand(setPathCommand);
 
-            GraphChecker graphChecker = new GraphChecker(inputPath);
-            string result = graphChecker.IsTree() ? "YES" : "NO";
-
-            File.WriteAllText(outputPath, result);
-            Console.WriteLine($"Lab3 завершено. Граф є деревом: {result}");
+            // Виконання команди
+            await rootCommand.InvokeAsync(args);
         }
     }
 }
