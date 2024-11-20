@@ -6,8 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-
 	<ItemGroup>
+		<PackageReference Include="ClassLib" Version="1.0.0" />
 		<None Update="INPUT.TXT">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
