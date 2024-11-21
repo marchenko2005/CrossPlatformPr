@@ -24,6 +24,27 @@
 
 ---
 
+## Запуск лабораторної роботи:
+dotnet run --project App -- run --lab lab1
+
+
+## Перевірка версії програми:
+dotnet run --project App -- version
+
+
+# Упаковка та публікація
+ ## Упаковка бібліотеки як dotnet tool:
+ dotnet pack MMarchenkoLib/MMarchenkoLib.csproj --configuration Release
+
+ ## Публікація до приватного NuGet-репозиторію (BaGet):
+ dotnet nuget push MMarchenkoLib/bin/Release/MMarchenkoTool.1.0.0.nupkg --source http://<ваш-сервер>:<порт>/v3/index.json --api-key <ваш-ключ>
+
+# Розгортання через Vagrant
+ ## Запуск віртуальних машин:
+ vagrant up
+
+
+---
 ## Структура проекту
 
 ```plaintext
@@ -46,21 +67,3 @@ Lab4/
 │
 └── README.md                     # Документація проекту
 
-## Запуск лабораторної роботи:
-dotnet run --project App -- run --lab lab1
-
-
-## Перевірка версії програми:
-dotnet run --project App -- version
-
-
-# Упаковка та публікація
- ## Упаковка бібліотеки як dotnet tool:
- dotnet pack MMarchenkoLib/MMarchenkoLib.csproj --configuration Release
-
- ## Публікація до приватного NuGet-репозиторію (BaGet):
- dotnet nuget push MMarchenkoLib/bin/Release/MMarchenkoTool.1.0.0.nupkg --source http://<ваш-сервер>:<порт>/v3/index.json --api-key <ваш-ключ>
-
-# Розгортання через Vagrant
- ## Запуск віртуальних машин:
- vagrant up
