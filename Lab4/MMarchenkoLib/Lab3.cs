@@ -10,18 +10,18 @@ namespace MMarchenkoLib
             try
             {
                 if (!File.Exists(inputFilePath))
-                    throw new FileNotFoundException($"Вхідний файл не знайдено: {inputFilePath}");
+                    throw new FileNotFoundException($"Р’С…С–РґРЅРёР№ С„Р°Р№Р» РЅРµ Р·РЅР°Р№РґРµРЅРѕ: {inputFilePath}");
 
                 string[] lines = File.ReadAllLines(inputFilePath);
                 GraphChecker checker = new GraphChecker(lines);
                 bool result = checker.IsTree();
 
                 File.WriteAllText(outputFilePath, result ? "YES" : "NO");
-                Console.WriteLine($"Граф є деревом: {(result ? "YES" : "NO")}");
+                Console.WriteLine($"Р“СЂР°С„ С” РґРµСЂРµРІРѕРј: {(result ? "YES" : "NO")}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Помилка: {ex.Message}");
+                Console.WriteLine($"РџРѕРјРёР»РєР°: {ex.Message}");
             }
         }
     }
