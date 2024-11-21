@@ -6,44 +6,52 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var rootCommand = new RootCommand("Lab Console Application");
+        // Головна команда
+        var rootCommand = new RootCommand("Консольний додаток для лабораторних робіт");
 
-        var versionCommand = new Command("version", "Вывод информации о версии приложения");
+        // Команда "version"
+        var versionCommand = new Command("version", "Вивести інформацію про версію програми");
         versionCommand.Handler = CommandHandler.Create(() =>
         {
-            Console.WriteLine("Автор: MMarchenko");
-            Console.WriteLine("Версия: 1.0.0");
+            Console.WriteLine("Автор: Марія Марченко");
+            Console.WriteLine("Версія: 1.0.0");
         });
 
-        var runCommand = new Command("run", "Запустить лабораторную работу")
+        // Команда "run"
+        var runCommand = new Command("run", "Запустити лабораторну роботу")
         {
-            new Option<string>("--lab", "Номер лабораторной (lab1, lab2, lab3)"),
-            new Option<string>("--input", () => "INPUT.TXT", "Путь к входному файлу"),
-            new Option<string>("--output", () => "OUTPUT.TXT", "Путь к выходному файлу")
+            new Option<string>("--lab", "Номер лабораторної роботи (lab1, lab2, lab3)")
+            {
+                IsRequired = true // Параметр --lab є обов'язковим
+            }
         };
 
-        runCommand.Handler = CommandHandler.Create<string, string, string>((lab, input, output) =>
+        runCommand.Handler = CommandHandler.Create<string>((lab) =>
         {
             if (string.IsNullOrEmpty(lab))
             {
-                Console.WriteLine("Необходимо указать номер лабораторной (lab1, lab2 или lab3).");
+                Console.WriteLine("Необхідно вказати номер лабораторної роботи (lab1, lab2 або lab3).");
                 return;
             }
 
             try
             {
                 var executor = new LabExecutor();
-                executor.ExecuteLab(lab, input, output);
+                executor.ExecuteLab(lab);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка выполнения: {ex.Message}");
+                Console.WriteLine($"Помилка виконання: {ex.Message}");
             }
         });
 
-        var setPathCommand = new Command("set-path", "Установить путь к папке с файлами")
+        // Команда "set-path"
+        var setPathCommand = new Command("set-path", "Встановити шлях до папки з файлами")
         {
-            new Option<string>("--path", "Путь к папке")
+            new Option<string>("--path", "Шлях до папки")
+            {
+                IsRequired = true // Параметр --path є обов'язковим
+            }
         };
 
         setPathCommand.Handler = CommandHandler.Create<string>((path) =>
@@ -51,18 +59,20 @@ class Program
             if (!string.IsNullOrEmpty(path))
             {
                 Environment.SetEnvironmentVariable("LAB_PATH", path);
-                Console.WriteLine($"Путь установлен: {path}");
+                Console.WriteLine($"Шлях встановлено: {path}");
             }
             else
             {
-                Console.WriteLine("Укажите корректный путь.");
+                Console.WriteLine("Вкажіть коректний шлях.");
             }
         });
 
+        // Додавання команд до головної команди
         rootCommand.AddCommand(versionCommand);
         rootCommand.AddCommand(runCommand);
         rootCommand.AddCommand(setPathCommand);
 
+        // Виконання команди
         await rootCommand.InvokeAsync(args);
     }
 }
