@@ -1,12 +1,12 @@
 Vagrant.configure("2") do |config| 
-  # Визначення IP-адрес для віртуальних машин
+  # Р’РёР·РЅР°С‡РµРЅРЅСЏ IP-Р°РґСЂРµСЃ РґР»СЏ РІС–СЂС‚СѓР°Р»СЊРЅРёС… РјР°С€РёРЅ
   hosts = {
     "linux" => "192.168.33.10",
     "mac" => "192.168.33.11",
     "windows" => "192.168.33.12"
   }
 
-  # Віртуальна машина для Linux
+  # Р’С–СЂС‚СѓР°Р»СЊРЅР° РјР°С€РёРЅР° РґР»СЏ Linux
   config.vm.define "linux" do |linux|
     linux.vm.box = "ubuntu/focal64"
     linux.vm.network "private_network", ip: hosts["linux"]
@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
     linux.vm.provision "shell", path: "provision-linux.sh"
   end
 
-  # Віртуальна машина для Windows
+  # Р’С–СЂС‚СѓР°Р»СЊРЅР° РјР°С€РёРЅР° РґР»СЏ Windows
   config.vm.define "windows" do |windows|
     windows.vm.box = "gusztavvargadr/windows-10"
     windows.vm.network "private_network", ip: hosts["windows"]
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     windows.vm.provision "shell", path: "provision-windows.sh"
   end
 
-  # Віртуальна машина для macOS
+  # Р’С–СЂС‚СѓР°Р»СЊРЅР° РјР°С€РёРЅР° РґР»СЏ macOS
   config.vm.define "mac" do |mac|
     mac.vm.box = "ramsey/macos-catalina"
     mac.vm.network "private_network", ip: hosts["mac"]
