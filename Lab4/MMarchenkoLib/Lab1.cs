@@ -14,26 +14,26 @@ namespace MMarchenkoLib
 
             try
             {
-                // Перевірка наявності вхідного файлу
+                // РџРµСЂРµРІС–СЂРєР° РЅР°СЏРІРЅРѕСЃС‚С– РІС…С–РґРЅРѕРіРѕ С„Р°Р№Р»Сѓ
                 if (!File.Exists(inputFilePath))
-                    throw new FileNotFoundException($"Вхідний файл не знайдено: {inputFilePath}");
+                    throw new FileNotFoundException($"Р’С…С–РґРЅРёР№ С„Р°Р№Р» РЅРµ Р·РЅР°Р№РґРµРЅРѕ: {inputFilePath}");
 
-                // Зчитування вхідного слова з файлу
+                // Р—С‡РёС‚СѓРІР°РЅРЅСЏ РІС…С–РґРЅРѕРіРѕ СЃР»РѕРІР° Р· С„Р°Р№Р»Сѓ
                 string inputWord = File.ReadAllText(inputFilePath)?.Trim() ?? string.Empty;
 
-                // Обчислення кількості унікальних перестановок
+                // РћР±С‡РёСЃР»РµРЅРЅСЏ РєС–Р»СЊРєРѕСЃС‚С– СѓРЅС–РєР°Р»СЊРЅРёС… РїРµСЂРµСЃС‚Р°РЅРѕРІРѕРє
                 long uniquePermutations = CalculateUniquePermutations(inputWord);
 
-                // Запис результату у вихідний файл
+                // Р—Р°РїРёСЃ СЂРµР·СѓР»СЊС‚Р°С‚Сѓ Сѓ РІРёС…С–РґРЅРёР№ С„Р°Р№Р»
                 File.WriteAllText(outputFilePath, uniquePermutations.ToString());
 
-                // Виведення результату
-                Console.WriteLine("Обчислення анаграм");
-                Console.WriteLine($"Кількість унікальних перестановок для слова \"{inputWord}\": {uniquePermutations}");
+                // Р’РёРІРµРґРµРЅРЅСЏ СЂРµР·СѓР»СЊС‚Р°С‚Сѓ
+                Console.WriteLine("РћР±С‡РёСЃР»РµРЅРЅСЏ Р°РЅР°РіСЂР°Рј");
+                Console.WriteLine($"РљС–Р»СЊРєС–СЃС‚СЊ СѓРЅС–РєР°Р»СЊРЅРёС… РїРµСЂРµСЃС‚Р°РЅРѕРІРѕРє РґР»СЏ СЃР»РѕРІР° \"{inputWord}\": {uniquePermutations}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Помилка: {ex.Message}");
+                Console.WriteLine($"РџРѕРјРёР»РєР°: {ex.Message}");
             }
         }
 
@@ -58,7 +58,7 @@ namespace MMarchenkoLib
         private static long CalculateFactorial(int number)
         {
             if (number < 0)
-                throw new ArgumentException("Число не може бути негативним.");
+                throw new ArgumentException("Р§РёСЃР»Рѕ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РЅРµРіР°С‚РёРІРЅРёРј.");
 
             long result = 1;
             for (int i = 2; i <= number; i++)
@@ -69,7 +69,7 @@ namespace MMarchenkoLib
         private static void ValidateInputWord(string inputWord)
         {
             if (string.IsNullOrWhiteSpace(inputWord))
-                throw new ArgumentException("Вхідне слово не може бути порожнім або null.");
+                throw new ArgumentException("Р’С…С–РґРЅРµ СЃР»РѕРІРѕ РЅРµ РјРѕР¶Рµ Р±СѓС‚Рё РїРѕСЂРѕР¶РЅС–Рј Р°Р±Рѕ null.");
         }
     }
 }
